@@ -7,6 +7,8 @@ var CLOUD_HEIGHT = 270;
 var _X = 100;
 var _Y = 10;
 var FONT_HEIGHT = 16;
+var TEXT_COLOR = '#000';
+var TEXT_FONT = '16px PT Mono';
 
 var renderCloud = function (ctx, x, y, color) {
   var radius = 30;
@@ -41,8 +43,8 @@ window.renderStatistics = function (ctx, names, times) {
   var graphWidth = (BAR_WIDTH * names.length) + BAR_DELTA * (names.length - 1);
   var tabX = (CLOUD_WIDTH - graphWidth) / 2;
   var tabY = _Y;
-  ctx.fillStyle = '#000';
-  ctx.font = '16px PT Mono';
+  ctx.fillStyle = TEXT_COLOR;
+  ctx.font = TEXT_FONT;
   tabY += 1.5 * FONT_HEIGHT;
   ctx.fillText('Ура вы победили!', _X + tabX, tabY);
   tabY += FONT_HEIGHT;
@@ -59,8 +61,8 @@ window.renderStatistics = function (ctx, names, times) {
     var currentBarX = _X + tabX + i * BAR_DELTA + i * BAR_WIDTH;
     var currentBarY = _Y + CLOUD_HEIGHT - currentBarHeight - tabY + FONT_HEIGHT;
     ctx.fillRect(currentBarX, currentBarY, BAR_WIDTH, currentBarHeight);
-    ctx.fillStyle = '#000';
-    ctx.font = '16px PT Mono';
+    ctx.fillStyle = TEXT_COLOR;
+    ctx.font = TEXT_FONT;
     ctx.fillText(names[i], currentBarX, CLOUD_HEIGHT);
     ctx.fillText(Math.round(times[i]), currentBarX, currentBarY - FONT_HEIGHT);
   }
