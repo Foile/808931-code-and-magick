@@ -38,6 +38,7 @@ var getMax = function (arr) {
 };
 
 window.renderStatistics = function (ctx, names, times) {
+
   renderCloud(ctx, _X + 10, _Y + 10, 'rgba(0, 0, 0, 0.7)');
   renderCloud(ctx, _X, _Y, '#fff');
   var graphWidth = (BAR_WIDTH * names.length) + BAR_DELTA * (names.length - 1);
@@ -55,7 +56,8 @@ window.renderStatistics = function (ctx, names, times) {
     if (names[i] === 'Вы') {
       ctx.fillStyle = 'rgba(255, 0, 0, 1)';
     } else {
-      ctx.fillStyle = 'rgba(0, 0, 255,' + Math.random() + ')';
+      var saturate = Math.ceil(Math.random() * 100) + '%';
+      ctx.fillStyle = 'hsl(240,' + saturate + ',50%)';
     }
     var currentBarHeight = BAR_HEIGHT * times[i] / maxTime;
     var currentBarX = _X + tabX + i * BAR_DELTA + i * BAR_WIDTH;
