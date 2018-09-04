@@ -10,17 +10,17 @@ var FONT_HEIGHT = 16;
 var TEXT_COLOR = '#000';
 var TEXT_FONT = '16px PT Mono';
 
-var renderCloud = function (ctx, x, y, color) {
-  var radius = 30;
+var renderRectSoft = function (ctx, x, y, w, h, color) {
+  var radius = Math.ceil(w / 10);
   ctx.fillStyle = color;
   ctx.beginPath();
   ctx.moveTo(x + radius, y);
-  ctx.lineTo(x + CLOUD_WIDTH - radius, y);
-  ctx.quadraticCurveTo(x + CLOUD_WIDTH, y, x + CLOUD_WIDTH, y + radius);
-  ctx.lineTo(x + CLOUD_WIDTH, y + CLOUD_HEIGHT - radius);
-  ctx.quadraticCurveTo(x + CLOUD_WIDTH, y + CLOUD_HEIGHT, x + CLOUD_WIDTH - radius, y + CLOUD_HEIGHT);
-  ctx.lineTo(x + radius, y + CLOUD_HEIGHT);
-  ctx.quadraticCurveTo(x, y + CLOUD_HEIGHT, x, y + CLOUD_HEIGHT - radius);
+  ctx.lineTo(x + w - radius, y);
+  ctx.quadraticCurveTo(x + w, y, x + w, y + radius);
+  ctx.lineTo(x + w, y + h - radius);
+  ctx.quadraticCurveTo(x + w, y + h, x + w - radius, y + h);
+  ctx.lineTo(x + radius, y + h);
+  ctx.quadraticCurveTo(x, y + h, x, y + h - radius);
   ctx.lineTo(x, y + radius);
   ctx.quadraticCurveTo(x, y, x + radius, y);
   ctx.closePath();
@@ -39,8 +39,8 @@ var getMax = function (arr) {
 
 window.renderStatistics = function (ctx, names, times) {
 
-  renderCloud(ctx, _X + 10, _Y + 10, 'rgba(0, 0, 0, 0.7)');
-  renderCloud(ctx, _X, _Y, '#fff');
+  renderRectSoft(ctx, _X + 10, _Y + 10, CLOUD_WIDTH, CLOUD_HEIGHT, 'rgba(0, 0, 0, 0.7)');
+  renderRectSoft(ctx, _X, _Y, CLOUD_WIDTH, CLOUD_HEIGHT, '#fff');
   var graphWidth = (BAR_WIDTH * names.length) + BAR_DELTA * (names.length - 1);
   var tabX = (CLOUD_WIDTH - graphWidth) / 2;
   var tabY = _Y;
@@ -53,16 +53,11 @@ window.renderStatistics = function (ctx, names, times) {
   var maxTime = getMax(times);
 
   for (var i = 0; i < names.length; i++) {
-    if (names[i] === 'Вы') {
-      ctx.fillStyle = 'rgba(255, 0, 0, 1)';
-    } else {
-      var saturate = Math.ceil(Math.random() * 100) + '%';
-      ctx.fillStyle = 'hsl(240,' + saturate + ',50%)';
-    }
+    var color = (names[i] === 'Вы') ? 'rgba(255, 0, 0, 1)' : 'hsl(240,' + Math.random() * 100 + '% ,50%)';
     var currentBarHeight = BAR_HEIGHT * times[i] / maxTime;
     var currentBarX = _X + tabX + i * BAR_DELTA + i * BAR_WIDTH;
     var currentBarY = _Y + CLOUD_HEIGHT - currentBarHeight - tabY + FONT_HEIGHT;
-    ctx.fillRect(currentBarX, currentBarY, BAR_WIDTH, currentBarHeight);
+    renderRectSoft(ctx, currentBarX, currentBarY, BAR_WIDTH, currentBarHeight, color);
     ctx.fillStyle = TEXT_COLOR;
     ctx.font = TEXT_FONT;
     ctx.fillText(names[i], currentBarX, CLOUD_HEIGHT);
