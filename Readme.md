@@ -1,7 +1,7 @@
 # Учебный проект «Код и Магия» [![Build status][travis-image]][travis-url]
 
 * Студент: [Foile Cherry](https://up.htmlacademy.ru/javascript/15/user/808931).
-* Наставник: [Андрей Рыжаков](https://up.htmlacademy.ru/javascript/15/user/201015).
+* Наставник: [Евгений Щеколдин](https://up.htmlacademy.ru/javascript/15/user/861059).
 
 ---
 
