@@ -1,4 +1,6 @@
 'use strict';
+var CODE_ENTER = 13;
+var CODE_ESC = 27;
 var WIZARD_NAMES = ['Иван', 'Хуан Себастьян', 'Мария', 'Кристоф', 'Виктор', 'Юлия', 'Люпита', 'Вашингтон'];
 var WIZARD_LAST_NAMES = ['да Марья', 'Верон', 'Мирабелла', 'Вальц', 'Онопко', 'Топольницкая', 'Нионго', 'Ирвинг'];
 var COAT_COLORS = ['rgb(101, 137, 164)', 'rgb(241, 43, 107)', 'rgb(146, 100, 161)', 'rgb(56, 159, 117)', 'rgb(215, 210, 55)', 'rgb(0, 0, 0)'];
@@ -49,25 +51,34 @@ var onSetupCloseClick = function () {
   setHidden(setup, true);
 };
 
-var onSetupEscClick = function (evt) {
-  if (evt.keyCode === 27 && setupWizard.querySelector('.setup-user-name') !== document.activeElement) {
+var onSetupEsc = function (evt) {
+  if (evt.keyCode === CODE_ESC && setupWizard.querySelector('.setup-user-name') !== document.activeElement) {
     setHidden(setup, true);
   }
 };
 
-var onSetupEnterClick = function (evt) {
-  if (evt.keyCode === 13) {
+var onSetupOpenEnter = function (evt) {
+  if (evt.keyCode === CODE_ENTER) {
     setHidden(setup, false);
+  }
+};
+
+var onSetupCloseEnter = function (evt) {
+  if (evt.keyCode === CODE_ENTER) {
+    setHidden(setup, true);
+    evt.preventDefault();
   }
 };
 
 var setupOpen = document.querySelector('.setup-open');
 setupOpen.querySelector('.setup-open-icon').setAttribute('tabindex', '0');
-setupOpen.addEventListener('keydown', onSetupEnterClick);
+setupOpen.addEventListener('keydown', onSetupOpenEnter);
 setupOpen.addEventListener('click', onSetupOpenClick);
 
 var setupClose = document.querySelector('.setup-close');
 setupClose.addEventListener('click', onSetupCloseClick);
+setupClose.setAttribute('tabindex', '0');
+setupClose.addEventListener('keypress', onSetupCloseEnter);
 
 var setupWizard = document.querySelector('.setup-wizard-form');
 setupWizard.action = SETUP_URL;
@@ -93,7 +104,7 @@ ball.addEventListener('click', function () {
   setupWizard.querySelector('input[name="fireball-color"').value = ballColor;
 });
 
-document.addEventListener('keydown', onSetupEscClick);
+document.addEventListener('keydown', onSetupEsc);
 
 var similarListElement = document.querySelector('.setup-similar-list');
 
