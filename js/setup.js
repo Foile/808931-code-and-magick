@@ -52,10 +52,13 @@ var closeSetup = function () {
   setup.style.left = setupDialogPositionInit.x;
   setup.style.top = setupDialogPositionInit.y;
 };
-
-var onSetupOpenClick = function () {
+var openSetup = function () {
   setHidden(setup, false);
+  setup.style.left = setupDialogPositionInit.x;
+  setup.style.top = setupDialogPositionInit.y;
 };
+
+var onSetupOpenClick = openSetup;
 
 var onSetupCloseClick = closeSetup;
 
@@ -67,7 +70,7 @@ var onSetupEsc = function (evt) {
 
 var onSetupOpenEnter = function (evt) {
   if (evt.keyCode === CODE_ENTER) {
-    setHidden(setup, false);
+    openSetup();
   }
 };
 
