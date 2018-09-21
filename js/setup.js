@@ -42,18 +42,26 @@ var setHidden = function (element, hide) {
 };
 
 var setup = document.querySelector('.setup');
+var setupDialogPositionInit = {
+  x: setup.style.left,
+  y: setup.style.top
+};
+
+var closeSetup = function () {
+  setHidden(setup, true);
+  setup.style.left = setupDialogPositionInit.x;
+  setup.style.top = setupDialogPositionInit.y;
+};
 
 var onSetupOpenClick = function () {
   setHidden(setup, false);
 };
 
-var onSetupCloseClick = function () {
-  setHidden(setup, true);
-};
+var onSetupCloseClick = closeSetup;
 
 var onSetupEsc = function (evt) {
   if (evt.keyCode === CODE_ESC && setupWizard.querySelector('.setup-user-name') !== document.activeElement) {
-    setHidden(setup, true);
+    closeSetup();
   }
 };
 
@@ -65,7 +73,7 @@ var onSetupOpenEnter = function (evt) {
 
 var onSetupCloseEnter = function (evt) {
   if (evt.keyCode === CODE_ENTER) {
-    setHidden(setup, true);
+    closeSetup();
     evt.preventDefault();
   }
 };
