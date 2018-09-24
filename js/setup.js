@@ -42,30 +42,41 @@ var setHidden = function (element, hide) {
 };
 
 var setup = document.querySelector('.setup');
-
-var onSetupOpenClick = function () {
-  setHidden(setup, false);
+var setupDialogPositionInit = {
+  x: setup.style.left,
+  y: setup.style.top
 };
 
-var onSetupCloseClick = function () {
+var closeSetup = function () {
   setHidden(setup, true);
+  setup.style.left = setupDialogPositionInit.x;
+  setup.style.top = setupDialogPositionInit.y;
 };
+var openSetup = function () {
+  setHidden(setup, false);
+  setup.style.left = setupDialogPositionInit.x;
+  setup.style.top = setupDialogPositionInit.y;
+};
+
+var onSetupOpenClick = openSetup;
+
+var onSetupCloseClick = closeSetup;
 
 var onSetupEsc = function (evt) {
   if (evt.keyCode === CODE_ESC && setupWizard.querySelector('.setup-user-name') !== document.activeElement) {
-    setHidden(setup, true);
+    closeSetup();
   }
 };
 
 var onSetupOpenEnter = function (evt) {
   if (evt.keyCode === CODE_ENTER) {
-    setHidden(setup, false);
+    openSetup();
   }
 };
 
 var onSetupCloseEnter = function (evt) {
   if (evt.keyCode === CODE_ENTER) {
-    setHidden(setup, true);
+    closeSetup();
     evt.preventDefault();
   }
 };
