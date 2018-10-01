@@ -122,7 +122,6 @@
     setHidden(document.querySelector('.setup-similar'), wizards.length <= 0);
   };
 
-
   var eyes = setupWizard.querySelector('.setup-wizard .wizard-eyes');
   var coat = setupWizard.querySelector('.setup-wizard .wizard-coat');
   var ball = setupWizard.querySelector('.setup-fireball-wrap');
